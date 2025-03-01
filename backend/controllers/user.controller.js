@@ -6,7 +6,7 @@ import cloudinary from "../utils/cloudinary.js";
 import { uploadToS3 } from "../utils/s3Utils.js";
 import nodemailer from 'nodemailer'
 // const TABLE_NAME = 'Users';
-const TABLE_NAME = 'Users_dev';
+const TABLE_NAME = 'Users';
 import { docClient } from "../config/aws.config.js";
 import { ScanCommand } from "@aws-sdk/client-dynamodb";
 
@@ -31,56 +31,87 @@ const emailTemplates = {
     <html>
     <head>
       <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background-color: #4A90E2; color: white; padding: 20px; text-align: center; border-radius: 5px 5px 0 0; }
-        .content { background-color: #ffffff; padding: 20px; border-radius: 0 0 5px 5px; border: 1px solid #dedede; }
+        body {
+          font-family: 'Arial', sans-serif;
+          line-height: 1.6;
+          color: #333333;
+          margin: 0;
+          padding: 0;
+        }
+        .container {
+          max-width: 600px;
+          margin: 0 auto;
+          padding: 0;
+        }
+        .header {
+          background-color: #1a365d;
+          color: white;
+          padding: 30px 20px;
+          text-align: center;
+        }
+        .content {
+          background-color: #ffffff;
+          padding: 40px 30px;
+          border: 1px solid #e5e5e5;
+        }
+        .footer {
+          background-color: #f8f9fa;
+          padding: 20px;
+          text-align: center;
+          color: #666666;
+          font-size: 14px;
+        }
+        h1 {
+          margin: 0;
+          font-size: 24px;
+          font-weight: 600;
+        }
+        h2 {
+          color: #1a365d;
+          font-size: 20px;
+          margin-top: 0;
+        }
+        ul {
+          padding-left: 20px;
+          margin: 15px 0;
+        }
+        li {
+          margin-bottom: 10px;
+          color: #333333;
+        }
+        p {
+          margin: 15px 0;
+          color: #333333;
+        }
+        .highlight {
+          color: #1a365d;
+          font-weight: 600;
+        }
       </style>
     </head>
     <body>
       <div class="container">
         <div class="header">
-          <h1>Welcome to Our Platform!</h1>
+          <h1>Welcome to Our Platform</h1>
         </div>
         <div class="content">
-          <h2>Hello ${fullname}!</h2>
-          <p>Thank you for registering as a ${role} on our platform. We're excited to have you join our community!</p>
+          <h2>Dear ${fullname},</h2>
+          <p>Thank you for joining our professional community as a <span class="highlight">${role}</span>. We're delighted to have you on board.</p>
           ${role === 'student' ?
-            `<p>As a student, you'll have access to:</p>
+            `<p>As a student member, you now have access to:</p>
             <ul>
-              <li>Job postings tailored to your profile</li>
-              <li>Resume building tools</li>
-              <li>Career guidance resources</li>
+              <li>Exclusive job opportunities aligned with your career goals</li>
+              <li>Professional resume building and optimization tools</li>
+              <li>Expert career guidance and industry insights</li>
+              <li>Networking opportunities with industry professionals</li>
             </ul>` :
-            `<p>You'll have access to our platform's features and resources designed specifically for ${role}s.</p>`
+            `<p>As a ${role}, you now have full access to our platform's professional suite of tools and resources designed to enhance your experience.</p>`
           }
-          <p>If you have any questions, feel free to reach out to our support team.</p>
+          <p>Should you have any questions or require assistance, our dedicated support team is here to help.</p>
+          <p>Best regards,<br>The Platform Team</p>
         </div>
-      </div>
-    </body>
-    </html>
-  `,
-
-  profileUpdate: (fullname) => `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background-color: #28a745; color: white; padding: 20px; text-align: center; border-radius: 5px 5px 0 0; }
-        .content { background-color: #ffffff; padding: 20px; border-radius: 0 0 5px 5px; border: 1px solid #dedede; }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          <h1>Profile Updated</h1>
-        </div>
-        <div class="content">
-          <h2>Hello ${fullname}!</h2>
-          <p>Your profile has been successfully updated.</p>
-          <p>If you didn't make these changes, please contact our support team immediately.</p>
+        <div class="footer">
+          © ${new Date().getFullYear()} Your Platform Name. All rights reserved.
         </div>
       </div>
     </body>
@@ -92,30 +123,101 @@ const emailTemplates = {
     <html>
     <head>
       <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background-color: #ffc107; color: white; padding: 20px; text-align: center; border-radius: 5px 5px 0 0; }
-        .content { background-color: #ffffff; padding: 20px; border-radius: 0 0 5px 5px; border: 1px solid #dedede; }
+        body {
+          font-family: 'Arial', sans-serif;
+          line-height: 1.6;
+          color: #333333;
+          margin: 0;
+          padding: 0;
+        }
+        .container {
+          max-width: 600px;
+          margin: 0 auto;
+          padding: 0;
+        }
+        .header {
+          background-color: #1a365d;
+          color: white;
+          padding: 30px 20px;
+          text-align: center;
+        }
+        .content {
+          background-color: #ffffff;
+          padding: 40px 30px;
+          border: 1px solid #e5e5e5;
+        }
+        .footer {
+          background-color: #f8f9fa;
+          padding: 20px;
+          text-align: center;
+          color: #666666;
+          font-size: 14px;
+        }
+        h1 {
+          margin: 0;
+          font-size: 24px;
+          font-weight: 600;
+        }
+        h2 {
+          color: #1a365d;
+          font-size: 20px;
+          margin-top: 0;
+        }
+        .info-box {
+          background-color: #f8f9fa;
+          border-left: 4px solid #1a365d;
+          padding: 15px;
+          margin: 20px 0;
+        }
+        .alert {
+          color: #721c24;
+          background-color: #f8d7da;
+          border: 1px solid #f5c6cb;
+          padding: 15px;
+          margin: 20px 0;
+          border-radius: 4px;
+        }
+        .info-label {
+          font-weight: 600;
+          color: #1a365d;
+          display: inline-block;
+          width: 100px;
+        }
       </style>
     </head>
     <body>
       <div class="container">
         <div class="header">
-          <h1>New Login Detected</h1>
+          <h1>Security Alert</h1>
         </div>
         <div class="content">
-          <h2>Hello ${fullname}!</h2>
-          <p>A new login was detected on your account.</p>
-          <p>Time: ${loginTime}</p>
-          <p>Device Info: ${deviceInfo}</p>
-          <p>If this wasn't you, please secure your account immediately.</p>
+          <h2>Dear ${fullname},</h2>
+          <p>We detected a new login to your account. Please review the details below:</p>
+
+          <div class="info-box">
+            <p><span class="info-label">Time:</span> ${loginTime}</p>
+            <p><span class="info-label">Device:</span> ${deviceInfo}</p>
+          </div>
+
+          <div class="alert">
+            If you don't recognize this activity, please secure your account immediately by:
+            <ul>
+              <li>Changing your password</li>
+              <li>Enabling two-factor authentication</li>
+              <li>Contacting our support team</li>
+            </ul>
+          </div>
+
+          <p>Best regards,<br>The Security Team</p>
+        </div>
+        <div class="footer">
+          © ${new Date().getFullYear()} Your Platform Name. All rights reserved.
         </div>
       </div>
     </body>
     </html>
   `
 };
-
 // Send email function
 const sendEmail = async (type, userEmail, data) => {
   try {
@@ -144,7 +246,7 @@ const sendEmail = async (type, userEmail, data) => {
     };
 
     await transporter.sendMail(mailOptions);
-    console.log(`${type} email sent successfully to ${userEmail}`);
+
     return true;
   } catch (error) {
     console.error(`Failed to send ${type} email:`, error);
@@ -152,130 +254,333 @@ const sendEmail = async (type, userEmail, data) => {
   }
 };
 //register user
+export const register = async (req, res) => {
+  try {
+    const {
+      fullname,
+      email,
+      phoneNumber,
+      password,
+      role,
+      currentLocation,
+      jobDomain,
+      jobTitle
+    } = req.body;
 
-  export const register = async (req, res) => {
-    try {
-      const {
-        fullname,
-        email,
-        phoneNumber,
-        password,
-        role,
-        currentLocation,
-        jobDomain,
-        // willingToRelocate,
-        // visaStatus,
-        jobTitle
-      } = req.body;
-
-      // Validate input fields
-      if (!fullname || !email || !phoneNumber || !password || !role) {
-        return res.status(400).json({
-          error: "All fields are required",
-          status: false,
-        });
-      }
-
-      // Additional validation for student-specific fields
-      if (role === 'student' && (!currentLocation || !jobTitle)) {
-        return res.status(400).json({
-          error: "All student-specific fields are required",
-          status: false,
-        });
-      }
-
-
-      // Check if user exists
-      const existingUser = await dynamoDB.get({
-        // TableName: "Users",
-        TableName: "Users",
-        Key: { email }
-      });
-
-      if (existingUser.Item) {
-        return res.status(400).json({
-          error: "User already exists",
-          status: false,
-        });
-      }
-
-      // const file = req.file;
-      // let cloudResponse;
-      // if (file) {
-      //   const fileUri = dataUri(file);
-      //   cloudResponse = await cloudinary.uploader.upload(fileUri.content);
-      // }
-      const file = req.file;
-      let s3Response;
-      if (file) {
-        s3Response = await uploadToS3(file, 'profile-photos');
-      }
-
-      // Hash password
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      // Prepare user data
-      const userData = {
-        fullname,
-        email,
-        phoneNumber: phoneNumber.toString(),
-        password: hashedPassword,
-        role,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        profile: {
-          profilePhoto: s3Response ? s3Response.url : null,
-          bio: "",
-          skills: [],
-          resume: "",
-          resumeOriginalName: ""
-
-        }
-      };
-
-      // Add student-specific fields
-      if (role === 'student') {
-        userData.profile = {
-          ...userData.profile,
-          currentLocation,
-          // willingToRelocate,
-          // visaStatus,
-          jobTitle,
-          jobDomain
-        };
-      }
-
-      // Save user to DynamoDB
-      await dynamoDB.put({
-        TableName: "Users",
-        Item: userData
-      });
-      await sendEmail('welcome', email, { fullname, role });
-
-      // Return success response
-      return res.status(201).json({
-        message: "User registered successfully",
-        status: true,
-        user: {
-          fullname: userData.fullname,
-          email: userData.email,
-          role: userData.role,
-          profile: userData.profile
-        },
-      });
-    } catch (err) {
-      console.error("Registration error:", err);
-      return res.status(500).json({
-        error: "Internal server error",
-        details: err.message,
+    // Validate input fields
+    if (!fullname || !email || !phoneNumber || !password || !role) {
+      return res.status(400).json({
+        error: "All fields are required",
+        status: false,
       });
     }
-  };
+
+    // Additional validation for student-specific fields
+    if (role === 'student' && (!currentLocation || !jobTitle)) {
+      return res.status(400).json({
+        error: "All student-specific fields are required",
+        status: false,
+      });
+    }
+
+    // Check if user already exists
+    const existingUser = await dynamoDB.get({
+      TableName: "Users",
+      Key: { email }
+    });
+
+    if (existingUser.Item) {
+      return res.status(400).json({
+        error: "User already exists",
+        status: false,
+      });
+    }
+
+    const file = req.file;
+    let s3Response;
+
+    if (file) {
+      // If user already has a profile photo, delete it from S3
+      if (existingUser.Item?.profile?.profilePhotoKey) {
+        await deleteFromS3(existingUser.Item.profile.profilePhotoKey);
+      }
+      // Upload new profile photo to S3
+      s3Response = await uploadToS3(file, 'profile-photos');
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Prepare user data
+    const userData = {
+      fullname,
+      email,
+      phoneNumber: phoneNumber.toString(),
+      password: hashedPassword,
+      role,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      profile: {
+        profilePhoto: s3Response ? s3Response.url : null,
+        profilePhotoKey: s3Response ? s3Response.key : null, // Store S3 key for future reference
+        bio: "",
+        skills: [],
+        resume: "",
+        resumeOriginalName: ""
+      }
+    };
+
+    // Add student-specific fields
+    if (role === 'student') {
+      userData.profile = {
+        ...userData.profile,
+        currentLocation,
+        jobTitle,
+        jobDomain
+      };
+    }
+
+    // Save user to DynamoDB
+    await dynamoDB.put({
+      TableName: "Users",
+      Item: userData
+    });
+
+    await sendEmail('welcome', email, { fullname, role });
+
+    // Return success response
+    return res.status(201).json({
+      message: "User registered successfully",
+      status: true,
+      user: {
+        fullname: userData.fullname,
+        email: userData.email,
+        role: userData.role,
+        profile: userData.profile
+      },
+    });
+  } catch (err) {
+    console.error("Registration error:", err);
+    return res.status(500).json({
+      error: "Internal server error",
+      details: err.message,
+    });
+  }
+};
+
+  // export const register = async (req, res) => {
+  //   try {
+  //     const {
+  //       fullname,
+  //       email,
+  //       phoneNumber,
+  //       password,
+  //       role,
+  //       currentLocation,
+  //       jobDomain,
+  //       // willingToRelocate,
+  //       // visaStatus,
+  //       jobTitle
+  //     } = req.body;
+
+  //     // Validate input fields
+  //     if (!fullname || !email || !phoneNumber || !password || !role) {
+  //       return res.status(400).json({
+  //         error: "All fields are required",
+  //         status: false,
+  //       });
+  //     }
+
+  //     // Additional validation for student-specific fields
+  //     if (role === 'student' && (!currentLocation || !jobTitle)) {
+  //       return res.status(400).json({
+  //         error: "All student-specific fields are required",
+  //         status: false,
+  //       });
+  //     }
+
+
+  //     // Check if user exists
+  //     const existingUser = await dynamoDB.get({
+  //       // TableName: "Users",
+  //       TableName: "Users",
+  //       Key: { email }
+  //     });
+
+  //     if (existingUser.Item) {
+  //       return res.status(400).json({
+  //         error: "User already exists",
+  //         status: false,
+  //       });
+  //     }
+
+
+  //     const file = req.file;
+  //     let s3Response;
+  //     if (file) {
+  //       s3Response = await uploadToS3(file, 'profile-photos');
+  //     }
+
+  //     // Hash password
+  //     const hashedPassword = await bcrypt.hash(password, 10);
+
+  //     // Prepare user data
+  //     const userData = {
+  //       fullname,
+  //       email,
+  //       phoneNumber: phoneNumber.toString(),
+  //       password: hashedPassword,
+  //       role,
+  //       createdAt: new Date().toISOString(),
+  //       updatedAt: new Date().toISOString(),
+  //       profile: {
+  //         profilePhoto: s3Response ? s3Response.url : null,
+  //         bio: "",
+  //         skills: [],
+  //         resume: "",
+  //         resumeOriginalName: ""
+
+  //       }
+  //     };
+
+  //     // Add student-specific fields
+  //     if (role === 'student') {
+  //       userData.profile = {
+  //         ...userData.profile,
+  //         currentLocation,
+  //         // willingToRelocate,
+  //         // visaStatus,
+  //         jobTitle,
+  //         jobDomain
+  //       };
+  //     }
+
+  //     // Save user to DynamoDB
+  //     await dynamoDB.put({
+  //       TableName: "Users",
+  //       Item: userData
+  //     });
+  //     await sendEmail('welcome', email, { fullname, role });
+
+  //     // Return success response
+  //     return res.status(201).json({
+  //       message: "User registered successfully",
+  //       status: true,
+  //       user: {
+  //         fullname: userData.fullname,
+  //         email: userData.email,
+  //         role: userData.role,
+  //         profile: userData.profile
+  //       },
+  //     });
+  //   } catch (err) {
+  //     console.error("Registration error:", err);
+  //     return res.status(500).json({
+  //       error: "Internal server error",
+  //       details: err.message,
+  //     });
+  //   }
+  // };
 
 
 
 
 //update use
+;
+
+export const modifyProfile = async (req, res) => {
+  try {
+    const { email } = req.body; // Assuming email is the unique identifier
+    const file = req.file;
+
+    // Validate input
+    if (!email) {
+      return res.status(400).json({
+        error: "Email is required",
+        status: false,
+      });
+    }
+
+    // Fetch user from DynamoDB
+    const userData = await dynamoDB.get({
+      TableName: "Users",
+      Key: { email }
+    });
+
+    if (!userData.Item) {
+      return res.status(404).json({
+        error: "User not found",
+        status: false,
+      });
+    }
+
+    let s3UploadResponse;
+    const oldProfilePhotoKey = userData.Item.profile?.profilePhotoKey || null;
+
+    if (file) {
+      // Upload new profile picture to S3
+      s3UploadResponse = await uploadToS3(file, 'profile-photos');
+    }
+
+    // Update user profile
+    const updatedProfile = {
+      ...userData.Item.profile,
+      profilePhoto: s3UploadResponse ? s3UploadResponse.url : userData.Item.profile?.profilePhoto,
+      profilePhotoKey: s3UploadResponse ? s3UploadResponse.key : userData.Item.profile?.profilePhotoKey
+    };
+
+    const updatedUserData = {
+      ...userData.Item,
+      profile: updatedProfile,
+      updatedAt: new Date().toISOString()
+    };
+
+    // Save updated user data to DynamoDB
+    await dynamoDB.put({
+      TableName: "Users",
+      Item: updatedUserData
+    });
+
+    // Delete old profile photo from S3 **after** successful update
+    if (oldProfilePhotoKey && s3UploadResponse) {
+      await removeFromS3(oldProfilePhotoKey);
+    }
+
+    return res.status(200).json({
+      message: "Profile updated successfully",
+      status: true,
+      user: {
+        fullname: updatedUserData.fullname,
+        email: updatedUserData.email,
+        role: updatedUserData.role,
+        profile: updatedUserData.profile
+      }
+    });
+  } catch (err) {
+    console.error("Profile modification error:", err);
+    return res.status(500).json({
+      error: "Internal server error",
+      details: err.message,
+    });
+  }
+};
+
+// Function to remove old profile picture from S3
+const removeFromS3 = async (fileKey) => {
+  try {
+    const command = new DeleteObjectCommand({
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: fileKey,
+    });
+
+    await s3Client.send(command);
+    console.log(`Removed old profile photo: ${fileKey}`);
+  } catch (err) {
+    console.error("Error removing old profile photo:", err);
+  }
+};
+
+
 
 
 export const updateProfile = async (req, res) => {
@@ -316,8 +621,14 @@ export const updateProfile = async (req, res) => {
     // Handle file upload to S3
     const file = req.file;
     let s3Response;
+
     if (file) {
-      s3Response = await uploadToS3(file, 'resumes');
+      // If user already has a resume, delete it from S3
+      if (existingUser.Item.profile.resumeKey) {
+        await deleteFromS3(existingUser.Item.profile.resumeKey);
+      }
+      // Upload new file to S3
+      s3Response = await uploadToS3(file, "resumes");
     }
 
     // Process skills
@@ -371,7 +682,7 @@ export const updateProfile = async (req, res) => {
         ":userData": updateData.profile
       }
     });
-    // await sendEmail('profileUpdate', email, { fullname: updateData.fullname });
+
     // Return updated user
     return res.status(200).json({
       message: "User updated successfully",
@@ -394,6 +705,22 @@ export const updateProfile = async (req, res) => {
     });
   }
 };
+
+// Function to delete old resume from S3
+const deleteFromS3 = async (resumeKey) => {
+  try {
+    const command = new DeleteObjectCommand({
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: resumeKey,
+    });
+
+    await s3Client.send(command);
+    console.log(`Deleted old resume: ${resumeKey}`);
+  } catch (err) {
+    console.error("Error deleting old resume:", err);
+  }
+};
+
 
 
 
@@ -532,6 +859,8 @@ export const logout = async (req, res) => {
 
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { GetCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
+import { DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { s3Client } from "../config/s3Config.js";
 
 const generateVerificationCode = () => {
   return Math.floor(100000 + Math.random() * 900000).toString();

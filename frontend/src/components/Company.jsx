@@ -34,7 +34,7 @@
 //   const fetchCompanies = async () => {
 //     try {
 //       const response = await fetch(
-//         "https://hirees.com/api/v1/company/companyinfo"
+//         "http://localhost:8000/api/v1/company/companyinfo"
 //       );
 //       const data = await response.json();
 //       if (data.status) {
@@ -402,7 +402,7 @@ const Company = () => {
   // Fetch companies from API
   const fetchCompanies = async () => {
     try {
-      const response = await fetch("https://hirees.com/api/v1/company/companyinfo");
+      const response = await fetch("https://www.hirees.com/api/v1/company/companyinfo");
       const data = await response.json();
       if (data.status) {
         setCompanies(data.companies);

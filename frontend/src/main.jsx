@@ -25,22 +25,22 @@ const LoadingSpinner = () => (
         <h1 className="text-5xl font-bold text-blue-600">
           Hirees
         </h1>
-        <div className="flex items-center justify-center mb-4 mt-10">
+        <div className="h-1 w-24 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto mt-2" />
+      </div>
+
+      {/* Loading Card */}
+      <div className="">
+        {/* Spinner */}
+        <div className="flex items-center justify-center mb-4">
           <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
         </div>
 
-
-
-      {/* Loading Card */}
+        {/* Status */}
 
       </div>
 
       {/* Footer */}
-      {/* <div className="mt-6 text-center animate-fade-in">
-        <p className="text-sm text-gray-500">
-          Optimizing your experience for the best performance
-        </p>
-      </div> */}
+
     </div>
 
     <style jsx>{`
