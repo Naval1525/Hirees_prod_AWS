@@ -199,7 +199,7 @@
 //     const { Items: applicantDetails } = await docClient.send(
 //       new QueryCommand({
 //         // TableName: "Users",
-//         TableName: "Users_dev",
+//         TableName: "Users",
 //         KeyConditionExpression: "#email = :email",
 //         ExpressionAttributeNames: {
 //           "#email": "email",
@@ -385,7 +385,7 @@
 //           // Get user details
 //           const userResult = await docClient.get({
 //             // TableName: "Users",
-//             TableName: "Users_dev",
+//             TableName: "Users",
 //             Key: {
 //               email: application.applicant,
 //             },
@@ -609,8 +609,8 @@ const transporter = nodemailer.createTransport({
   port: 587,
   secure: false,
   auth: {
-    user: process.env.EMAIL_USER || "navalbihani15@gmail.com",
-    pass: process.env.EMAIL_APP_PASSWORD || "rsse sotb vxtr xvmj",
+    user: process.env.EMAIL_USER || "hireessupp@gmail.com",
+    pass: process.env.EMAIL_APP_PASSWORD || "ctdw tvvn psqw haap",
   },
   tls: {
     rejectUnauthorized: false,

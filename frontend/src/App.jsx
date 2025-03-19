@@ -112,15 +112,241 @@
 //   );
 // }
 
+// // export default App;
+// import { lazy, Suspense } from "react";
+// import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+// // Only import Home component directly - this loads first
+// import Home from "./components/Home";
+// import Company from "./components/Company";
+// import CompanyJobs from "./components/CompanyJobs";
+// import ContactPage from "./components/ContactPage";
+// import RecruiterDashboard from "./components/shared/RecruiterDashboard";
+
+// // Lazy load everything else
+// const Login = lazy(() => import("./components/auth/Login"));
+// const Signup = lazy(() => import("./components/auth/Signup"));
+// const CandidateSignup = lazy(() => import("./components/auth/CandidateSignup"));
+// const RecruiterSignup = lazy(() => import("./components/auth/RecruiterSignup"));
+// const Jobs = lazy(() => import("./components/Jobs"));
+// const JobDescription = lazy(() => import("./components/JobDescription"));
+// const Browse = lazy(() => import("./components/Browse"));
+// const Profile = lazy(() => import("./components/Profile"));
+// const AdminJobs = lazy(() => import("./components/admin/AdminJobs"));
+// const Companies = lazy(() => import("./components/admin/Companies"));
+// const CompanyCreaate = lazy(() => import("./components/admin/CompanyCreaate"));
+// const CompanySetup = lazy(() => import("./components/admin/CompanySetup"));
+// const PostJob = lazy(() => import("./components/admin/PostJob"));
+// const Applicants = lazy(() => import("./components/admin/Applicants"));
+// const ProtectedRoute = lazy(() => import("./components/admin/ProtectedRoute"));
+// const Candidates = lazy(() => import("./components/admin/Candidates"));
+// const EditJobForm = lazy(() => import("./components/admin/EditJobForm"));
+
+// const appRouter = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <Home />,  // This loads immediately
+//   },
+//   {
+//     path: "/login",
+//     element: (
+//       <Suspense fallback={<div>Loading...</div>}>
+//         <Login />
+//       </Suspense>
+//     ),
+//   },
+//   {
+//     path: "/jobs/:companyId",
+//     element: <CompanyJobs></CompanyJobs>,  // This loads immediately
+//   },
+//   {
+//     path: "/signup/candidate",
+//     element: (
+//       <Suspense fallback={<div>Loading...</div>}>
+//         <CandidateSignup />
+//       </Suspense>
+//     ),
+//   },
+//   {
+//     path: "/signup/recruiter",
+//     element: (
+//       <Suspense fallback={<div>Loading...</div>}>
+//         <RecruiterSignup />
+//       </Suspense>
+//     ),
+//   },
+//   {
+//     path: "/signup",
+//     element: (
+//       <Suspense fallback={<div>Loading...</div>}>
+//         <Signup />
+//       </Suspense>
+//     ),
+//   },
+//   {
+//     path: "/jobs",
+//     element: (
+//       <Suspense fallback={<div>Loading...</div>}>
+//         <Jobs />
+//       </Suspense>
+//     ),
+//   },
+//   {
+//     path: "/contactUs",
+//     element: (
+//       <Suspense fallback={<div>Loading...</div>}>
+//        <ContactPage></ContactPage>
+//       </Suspense>
+//     ),
+//   },
+//   {
+//     path: "/company",
+//     element: (
+//       <Suspense fallback={<div>Loading...</div>}>
+//       <Company></Company>
+//       </Suspense>
+//     ),
+//   },
+//   {
+//     path: "/description/:id",
+//     element: (
+//       <Suspense fallback={<div>Loading...</div>}>
+//         <JobDescription />
+//       </Suspense>
+//     ),
+//   },
+//   {
+//     path: "/browse",
+//     element: (
+//       <Suspense fallback={<div>Loading...</div>}>
+//         <Browse />
+//       </Suspense>
+//     ),
+//   },
+//   {
+//     path: "/profile",
+//     element: (
+//       <Suspense fallback={<div>Loading...</div>}>
+//         <Profile />
+//       </Suspense>
+//     ),
+//   },
+//   {
+//     path: "/admin/companies",
+//     element: (
+//       <Suspense fallback={<div>Loading...</div>}>
+//         <ProtectedRoute>
+//           <Companies />
+//         </ProtectedRoute>
+//       </Suspense>
+//     ),
+//   },
+//   {
+//     path: "/admin/companies/create",
+//     element: (
+//       <Suspense fallback={<div>Loading...</div>}>
+//         <ProtectedRoute>
+//           <CompanyCreaate />
+//         </ProtectedRoute>
+//       </Suspense>
+//     ),
+//   },
+//   {
+//     path: "/admin/companies/:id",
+//     element: (
+//       <Suspense fallback={<div>Loading...</div>}>
+//         <ProtectedRoute>
+//           <CompanySetup />
+//         </ProtectedRoute>
+//       </Suspense>
+//     ),
+//   },
+//   {
+//     path: "/admin/jobs",
+//     element: (
+//       <Suspense fallback={<div>Loading...</div>}>
+//         <ProtectedRoute>
+//           <AdminJobs />
+//         </ProtectedRoute>
+//       </Suspense>
+//     ),
+//   },
+//   {
+//     path: "/admin/jobs/post",
+//     element: (
+//       <Suspense fallback={<div>Loading...</div>}>
+//         <ProtectedRoute>
+//           <PostJob />
+//         </ProtectedRoute>
+//       </Suspense>
+//     ),
+//   },
+//   {
+//     path: "/admin/jobs/:id/applicants",
+//     element: (
+//       <Suspense fallback={<div>Loading...</div>}>
+//         <ProtectedRoute>
+//           <Applicants />
+//         </ProtectedRoute>
+//       </Suspense>
+//     ),
+//   },
+//   {
+//     path: "/admin/candidates",
+//     element: (
+//       <Suspense fallback={<div>Loading...</div>}>
+//         <ProtectedRoute>
+//           <Candidates />
+//         </ProtectedRoute>
+//       </Suspense>
+//     ),
+//   },
+//   {
+//     path: "/admin/jobs/edit/:id",
+//     element: (
+//       <Suspense fallback={<div>Loading...</div>}>
+//         <ProtectedRoute>
+//           <EditJobForm />
+//         </ProtectedRoute>
+//       </Suspense>
+//     ),
+//   },
+//   {
+//     path: "/admin/dashboard",
+//     element: (
+//       <Suspense fallback={<div>Loading...</div>}>
+//         <ProtectedRoute>
+//           <RecruiterDashboard/>
+//         </ProtectedRoute>
+//       </Suspense>
+//     ),
+//   },
+// ]);
+
+// function App() {
+//   return <RouterProvider router={appRouter} />;
+// }
+
 // export default App;
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+// Loading component
+const PageLoader = () => (
+  <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-80 z-50">
+    <div className="text-center">
+      <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-gray-900 mb-4"></div>
+      <p className="text-lg font-semibold">Loading page...</p>
+    </div>
+  </div>
+);
 
 // Only import Home component directly - this loads first
 import Home from "./components/Home";
 import Company from "./components/Company";
 import CompanyJobs from "./components/CompanyJobs";
 import ContactPage from "./components/ContactPage";
+import RecruiterDashboard from "./components/shared/RecruiterDashboard";
 
 // Lazy load everything else
 const Login = lazy(() => import("./components/auth/Login"));
@@ -141,6 +367,22 @@ const ProtectedRoute = lazy(() => import("./components/admin/ProtectedRoute"));
 const Candidates = lazy(() => import("./components/admin/Candidates"));
 const EditJobForm = lazy(() => import("./components/admin/EditJobForm"));
 
+// Wrapping all lazy components with consistent loader
+const withLoader = (Component) => (
+  <Suspense fallback={<PageLoader />}>
+    <Component />
+  </Suspense>
+);
+
+// Wrapping protected routes
+const withProtectedLoader = (Component) => (
+  <Suspense fallback={<PageLoader />}>
+    <ProtectedRoute>
+      <Component />
+    </ProtectedRoute>
+  </Suspense>
+);
+
 const appRouter = createBrowserRouter([
   {
     path: "/",
@@ -148,167 +390,83 @@ const appRouter = createBrowserRouter([
   },
   {
     path: "/login",
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <Login />
-      </Suspense>
-    ),
+    element: withLoader(Login),
   },
   {
     path: "/jobs/:companyId",
-    element: <CompanyJobs></CompanyJobs>,  // This loads immediately
+    element: <CompanyJobs />,  // This loads immediately
   },
   {
     path: "/signup/candidate",
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <CandidateSignup />
-      </Suspense>
-    ),
+    element: withLoader(CandidateSignup),
   },
   {
     path: "/signup/recruiter",
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <RecruiterSignup />
-      </Suspense>
-    ),
+    element: withLoader(RecruiterSignup),
   },
   {
     path: "/signup",
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <Signup />
-      </Suspense>
-    ),
+    element: withLoader(Signup),
   },
   {
     path: "/jobs",
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <Jobs />
-      </Suspense>
-    ),
+    element: withLoader(Jobs),
   },
   {
     path: "/contactUs",
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-       <ContactPage></ContactPage>
-      </Suspense>
-    ),
+    element: withLoader(() => <ContactPage />),
   },
   {
     path: "/company",
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-      <Company></Company>
-      </Suspense>
-    ),
+    element: withLoader(() => <Company />),
   },
   {
     path: "/description/:id",
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <JobDescription />
-      </Suspense>
-    ),
+    element: withLoader(JobDescription),
   },
   {
     path: "/browse",
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <Browse />
-      </Suspense>
-    ),
+    element: withLoader(Browse),
   },
   {
     path: "/profile",
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <Profile />
-      </Suspense>
-    ),
+    element: withLoader(Profile),
   },
   {
     path: "/admin/companies",
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <ProtectedRoute>
-          <Companies />
-        </ProtectedRoute>
-      </Suspense>
-    ),
+    element: withProtectedLoader(Companies),
   },
   {
     path: "/admin/companies/create",
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <ProtectedRoute>
-          <CompanyCreaate />
-        </ProtectedRoute>
-      </Suspense>
-    ),
+    element: withProtectedLoader(CompanyCreaate),
   },
   {
     path: "/admin/companies/:id",
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <ProtectedRoute>
-          <CompanySetup />
-        </ProtectedRoute>
-      </Suspense>
-    ),
+    element: withProtectedLoader(CompanySetup),
   },
   {
     path: "/admin/jobs",
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <ProtectedRoute>
-          <AdminJobs />
-        </ProtectedRoute>
-      </Suspense>
-    ),
+    element: withProtectedLoader(AdminJobs),
   },
   {
     path: "/admin/jobs/post",
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <ProtectedRoute>
-          <PostJob />
-        </ProtectedRoute>
-      </Suspense>
-    ),
+    element: withProtectedLoader(PostJob),
   },
   {
     path: "/admin/jobs/:id/applicants",
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <ProtectedRoute>
-          <Applicants />
-        </ProtectedRoute>
-      </Suspense>
-    ),
+    element: withProtectedLoader(Applicants),
   },
   {
     path: "/admin/candidates",
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <ProtectedRoute>
-          <Candidates />
-        </ProtectedRoute>
-      </Suspense>
-    ),
+    element: withProtectedLoader(Candidates),
   },
   {
     path: "/admin/jobs/edit/:id",
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <ProtectedRoute>
-          <EditJobForm />
-        </ProtectedRoute>
-      </Suspense>
-    ),
+    element: withProtectedLoader(EditJobForm),
+  },
+  {
+    path: "/admin/dashboard",
+    element: withProtectedLoader(() => <RecruiterDashboard />),
   },
 ]);
 

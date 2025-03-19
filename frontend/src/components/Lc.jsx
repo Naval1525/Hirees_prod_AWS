@@ -747,7 +747,7 @@ function Lc({ job }) {
           <div className="flex-1 min-w-0">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
               <h2 className="text-lg md:text-xl font-bold text-gray-800 truncate">
-                {job?.company?.CompanyName || "Company Name"}
+                {job?.company?.name || "Company Name"}
               </h2>
               {job?.createdAt && (
                 <span className="text-gray-500 text-xs md:text-sm whitespace-nowrap">

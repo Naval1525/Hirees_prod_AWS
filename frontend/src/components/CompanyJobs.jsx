@@ -28,7 +28,7 @@
 // //   const fetchCompanyJobs = async () => {
 // //     try {
 // //       const response = await fetch(
-// //         `https://www.hirees.com///api/v1/job/getCompanyJobs/${companyId}`
+// //         `https://www.hirees.com/api/v1/job/getCompanyJobs/${companyId}`
 // //       );
 // //       const data = await response.json();
 // //       if (data.success) {
@@ -605,7 +605,7 @@ const CompanyJobs = () => {
                     )}
                     <div className="flex items-center text-gray-600 text-sm sm:text-base">
                       <Users className="w-4 h-4 mr-1 flex-shrink-0" />
-                      <span className="truncate">{company.size || "Not specified"}</span>
+                      <span className="truncate">{company.userIds.length || "Not specified"}</span>
                     </div>
                   </div>
                 </div>

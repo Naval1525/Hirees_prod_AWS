@@ -34,7 +34,7 @@
 //   const fetchCompanies = async () => {
 //     try {
 //       const response = await fetch(
-//         "http://localhost:8000/api/v1/company/companyinfo"
+//         "https://www.hirees.com/api/v1/company/companyinfo"
 //       );
 //       const data = await response.json();
 //       if (data.status) {
