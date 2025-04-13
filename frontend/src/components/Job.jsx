@@ -653,7 +653,7 @@
 //       const checkSavedStatus = async () => {
 //         try {
 //           const response = await axios.get(
-//             `https://www.hirees.com/api/savedjobs/check/${job.jobId}`,
+//             `http://localhost:8000/api/savedjobs/check/${job.jobId}`,
 //             { withCredentials: true }
 //           );
 //           setIsSaved(response.data.isSaved);
@@ -682,14 +682,14 @@
 //     try {
 //       setIsLoading(true);
 //       if (!isSaved) {
-//         await axios.post('https://www.hirees.com/api/savedjobs/save',
+//         await axios.post('http://localhost:8000/api/savedjobs/save',
 //           { jobId: job.jobId },
 //           { withCredentials: true }
 //         );
 //         setIsSaved(true);
 //       } else {
 //         await axios.delete(
-//           `https://www.hirees.com/api/savedjobs/unsave/${job.jobId}`,
+//           `http://localhost:8000/api/savedjobs/unsave/${job.jobId}`,
 //           { withCredentials: true }
 //         );
 //         setIsSaved(false);

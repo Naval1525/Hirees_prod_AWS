@@ -1,4 +1,3 @@
-
 // import React, { lazy, Suspense } from 'react';
 // import ReactDOM from 'react-dom/client';
 // import './index.css';
@@ -6,7 +5,6 @@
 // import store from './redux/store.js';
 // import { persistStore } from 'redux-persist';
 // import { PersistGate } from 'redux-persist/integration/react';
-
 
 // // Lazy load components with explicit imports
 // const App = lazy(() => /* @vite-ignore */ import('./App.jsx'));
@@ -97,7 +95,6 @@
 //   </div>
 // );
 
-
 // export default LoadingSpinner;
 
 // const persistor = persistStore(store);
@@ -137,15 +134,22 @@
 // } else {
 //   setTimeout(preloadComponents, 1000);
 // }
-import React, { lazy, Suspense } from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import { Provider } from 'react-redux';
-import store from './redux/store.js';
-import { persistStore } from 'redux-persist';
-import { PersistGate } from 'redux-persist/integration/react';
+import React, { lazy, Suspense } from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import { Provider } from "react-redux";
+import store from "./redux/store.js";
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import Waves from "./components/background/Waves";
+import TrueFocus from "./components/background/TrueFocus";
+import Aurora from "./components/background/Aurora";
 
 // Lazy load components with explicit imports
+// Just replace the lazy imports with a never-resolving Promise
+// const App = lazy(() => new Promise(() => {}));
+// const Toaster = lazy(() => new Promise(() => {}));
+
 const App = lazy(() => /* @vite-ignore */ import('./App.jsx'));
 const Toaster = lazy(() =>
   import('./components/ui/sonner.jsx').then(module => ({
@@ -154,25 +158,54 @@ const Toaster = lazy(() =>
 );
 
 // Simple empty div for fallback instead of spinner
-const EmptyFallback = () => <div></div>;
+const EmptyFallback = () => (
+
+  <div className="flex flex-col justify-between min-h-screen">
+    {/* Top Aurora */}
+    <div className="">
+      <Aurora
+        amplitude={2.0}
+        colorStops={["#2563eb", "#3b82f6", "#60a5fa", "#93c5fd"]}
+      />
+    </div>
+
+    {/* Center Content */}
+    <div className="flex items-center justify-center py-4 font-bold ">
+      <TrueFocus
+        sentence="Welcome to Hirees"
+        manualMode={false}
+        blurAmount={5}
+        borderColor="#2563EB"
+        animationDuration={2}
+        pauseBetweenAnimations={1}
+      />
+    </div>
+
+    {/* Bottom Aurora */}
+    <div className="rotate-180 pb-4">
+      <Aurora
+        amplitude={2.0}
+        colorStops={["#2563eb", "#3b82f6", "#60a5fa", "#93c5fd"]}
+      />
+    </div>
+  </div>
+);
+
 
 const persistor = persistStore(store);
 
 // Preload critical components with explicit imports
 const preloadComponents = () => {
-  const preloadApp = () => import('./App.jsx');
-  const preloadToaster = () => import('./components/ui/sonner.jsx');
+  const preloadApp = () => import("./App.jsx");
+  const preloadToaster = () => import("./components/ui/sonner.jsx");
 
-  Promise.all([
-    preloadApp(),
-    preloadToaster()
-  ]).catch(error => {
-    console.error('Error preloading components:', error);
+  Promise.all([preloadApp(), preloadToaster()]).catch((error) => {
+    console.error("Error preloading components:", error);
   });
 };
 
 // Initialize root with lazy loading but no visible loader
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={<EmptyFallback />} persistor={persistor}>
@@ -188,7 +221,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 );
 
 // Preload components after initial render
-if (typeof requestIdleCallback === 'function') {
+if (typeof requestIdleCallback === "function") {
   requestIdleCallback(preloadComponents);
 } else {
   setTimeout(preloadComponents, 1000);

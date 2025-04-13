@@ -28,7 +28,7 @@
 // //   const fetchCompanyJobs = async () => {
 // //     try {
 // //       const response = await fetch(
-// //         `https://www.hirees.com/api/v1/job/getCompanyJobs/${companyId}`
+// //         `http://localhost:8000/api/v1/job/getCompanyJobs/${companyId}`
 // //       );
 // //       const data = await response.json();
 // //       if (data.success) {
@@ -229,7 +229,7 @@
 //   const fetchCompanyJobs = async () => {
 //     try {
 //       const response = await fetch(
-//         `https://www.hirees.com/api/v1/job/getCompanyJobs/${companyId}`
+//         `http://localhost:8000/api/v1/job/getCompanyJobs/${companyId}`
 //       );
 //       const data = await response.json();
 //       if (data.success) {
