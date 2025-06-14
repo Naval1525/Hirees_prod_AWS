@@ -109,7 +109,7 @@ function CompanySetup() {
   // Fix: Added a console.log to debug the singleCompany data
   useEffect(() => {
     if (singleCompany) {
-      console.log("Company data received:", singleCompany);
+
       // Fix: Use the correct property names from the API response
       setInput({
         name: singleCompany.CompanyName || "",
