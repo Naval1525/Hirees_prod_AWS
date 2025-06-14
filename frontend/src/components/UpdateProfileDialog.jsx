@@ -221,7 +221,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
   return (
     <Dialog open={open}>
       <DialogContent
-        className="max-w-lg p-6 rounded-lg shadow-lg bg-white border border-gray-300"
+        className="max-w-2xl w-[90vw] max-h-[90vh] overflow-y-auto p-6 rounded-lg shadow-lg bg-white border-2 border-gray-200"
         onInteractOutside={() => setOpen(false)}
       >
         <DialogHeader>
@@ -232,7 +232,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         <form onSubmit={submitHandler}>
           <div className="grid gap-6 py-4">
             {/* Existing fields */}
-            <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 items-center gap-4">
               <Label
                 htmlFor="fullname"
                 className="text-right font-medium text-gray-700"
@@ -245,12 +245,12 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 name="fullname"
                 value={input.fullname}
                 onChange={changeEventHandler}
-                className="col-span-3 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="col-span-3 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#012760]"
                 placeholder="Enter your name"
               />
             </div>
 
-            <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 items-center gap-4">
               <Label
                 htmlFor="email"
                 className="text-right font-medium text-gray-700"
@@ -263,12 +263,12 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 name="email"
                 value={input.email}
                 onChange={changeEventHandler}
-                className="col-span-3 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="col-span-3 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#012760]"
                 placeholder="Enter your email"
               />
             </div>
 
-            <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 items-center gap-4">
               <Label
                 htmlFor="phoneNumber"
                 className="text-right font-medium text-gray-700"
@@ -281,30 +281,29 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 name="phoneNumber"
                 value={input.phoneNumber}
                 onChange={changeEventHandler}
-                className="col-span-3 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="col-span-3 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#012760]"
                 placeholder="Enter your number"
               />
             </div>
 
-            <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 items-center gap-4">
               <Label
                 htmlFor="bio"
                 className="text-right font-medium text-gray-700"
               >
                 Bio
               </Label>
-              <input
-                type="text"
+              <textarea
                 id="bio"
                 name="bio"
                 value={input.bio}
                 onChange={changeEventHandler}
-                className="col-span-3 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="col-span-3 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#012760] min-h-[100px] resize-y"
                 placeholder="Write a short bio"
               />
             </div>
 
-            <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 items-center gap-4">
               <Label
                 htmlFor="skills"
                 className="text-right font-medium text-gray-700"
@@ -317,12 +316,12 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 name="skills"
                 value={input.skills}
                 onChange={changeEventHandler}
-                className="col-span-3 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="col-span-3 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#012760]"
                 placeholder="List your skills (comma-separated)"
               />
             </div>
 
-            <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 items-center gap-4">
               <Label
                 htmlFor="file"
                 className="text-right font-medium text-gray-700"
@@ -335,7 +334,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 name="file"
                 accept=".pdf"
                 onChange={fileChangeHandler}
-                className="col-span-3 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="col-span-3 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#012760]"
               />
             </div>
 
@@ -345,7 +344,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
             {loading ? (
               <Button
                 type="submit"
-                className="w-full my-4 flex items-center justify-center"
+                className="w-full my-4 flex items-center justify-center bg-[#012760] hover:bg-[#012760]/90"
                 disabled
               >
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -354,7 +353,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
             ) : (
               <button
                 type="submit"
-                className="w-full bg-black text-white py-2 rounded-md mt-4 my-4 hover:bg-gray-800"
+                className="w-full bg-[#012760] text-white py-2 rounded-md mt-4 my-4 hover:bg-[#012760]/90"
               >
                 Update
               </button>

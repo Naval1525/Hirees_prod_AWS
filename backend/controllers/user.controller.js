@@ -384,7 +384,121 @@ export const register = async (req, res) => {
     });
   }
 };
+// export const register = async (req, res) => {
+//   try {
+//     const {
+//       fullname,
+//       email,
+//       phoneNumber,
+//       password,
+//       role,
+//       currentLocation,
+//       jobDomain,
+//       jobTitle,
+//     } = req.body;
 
+//     // Validate input fields
+//     if (!fullname || !email || !phoneNumber || !password || !role) {
+//       return res.status(400).json({
+//         error: "All fields are required",
+//         status: false,
+//       });
+//     }
+
+//     // Additional validation for student-specific fields
+//     if (role === "student" && (!currentLocation || !jobTitle)) {
+//       return res.status(400).json({
+//         error: "All student-specific fields are required",
+//         status: false,
+//       });
+//     }
+
+//     // Check if user already exists
+//     const existingUser = await dynamoDB.get({
+//       TableName: "Users",
+//       Key: { email },
+//     });
+
+//     if (existingUser.Item) {
+//       return res.status(400).json({
+//         error: "User already exists",
+//         status: false,
+//       });
+//     }
+
+//     const file = req.file;
+//     let s3Response;
+
+//     if (file) {
+//       // If user already has a profile photo, delete it from S3
+//       if (existingUser.Item?.profile?.profilePhotoKey) {
+//         await deleteFromS3(existingUser.Item.profile.profilePhotoKey);
+//       }
+//       // Upload new profile photo to S3
+//       s3Response = await uploadToS3(file, "profile-photos");
+//     }
+
+//     // Hash password
+//     const hashedPassword = await bcrypt.hash(password, 10);
+
+//     // Prepare user data
+//     const userData = {
+//       fullname,
+//       email,
+//       phoneNumber: phoneNumber.toString(),
+//       password: hashedPassword,
+//       role,
+//       createdAt: new Date().toISOString(),
+//       updatedAt: new Date().toISOString(),
+//       profile: {
+//         profilePhoto: s3Response ? s3Response.url : null,
+//         profilePhotoKey: s3Response ? s3Response.key : null, // Store S3 key for future reference
+//         bio: "",
+//         skills: [],
+//         resume: "",
+//         resumeOriginalName: "",
+//       },
+//     };
+
+//     // Add student-specific fields
+//     if (role === "student") {
+//       userData.profile = {
+//         ...userData.profile,
+//         currentLocation,
+//         jobTitle,
+//         jobDomain,
+//       };
+//     }
+
+//     // Save user to DynamoDB
+//     await dynamoDB.put({
+//       TableName: "Users",
+//       Item: userData,
+//     });
+
+//     await sendEmail("welcome", email, { fullname, role });
+
+//     // Return success response
+//     return res.status(201).json({
+//       message: "User registered successfully",
+//       status: true,
+//       user: {
+//         fullname: userData.fullname,
+//         email: userData.email,
+//         role: userData.role,
+//         profile: userData.profile,
+//       },
+//     });
+//   } catch (err) {
+//     console.error("Registration error:", err);
+//     return res.status(500).json({
+//       error: "Internal server error",
+//       details: err.message,
+//     });
+//   }
+// };
+
+//update user
 export const modifyProfile = async (req, res) => {
   try {
     const { email } = req.body; // Assuming email is the unique identifier
