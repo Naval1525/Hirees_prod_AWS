@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ChatBot, { WebsiteDataProvider } from "./components/ChatBot.jsx"; // Import the chatbot
+// import ChatBot, { WebsiteDataProvider } from "./components/ChatBot.jsx"; // Temporarily disabled chatbot
 
 // Loading component
 const PageLoader = () => (
@@ -56,115 +56,119 @@ const withProtectedLoader = (Component) => (
 );
 
 // Create Layout component to wrap all routes with WebsiteDataProvider and ChatBot
-const Layout = ({ children }) => {
-  return (
-      <WebsiteDataProvider>
-        {children}
-        <ChatBot />
-      </WebsiteDataProvider>
-  );
-};
+// const Layout = ({ children }) => {
+//   return (
+//       <WebsiteDataProvider>
+//         {children}
+//         <ChatBot />
+//       </WebsiteDataProvider>
+//   );
+// };
 
 // Modified to use Layout component
-const withLayout = (Component) => (
-    <Layout>
-      {Component}
-    </Layout>
-);
+// const withLayout = (Component) => (
+//     <Layout>
+//       {Component}
+//     </Layout>
+// );
 
-const appRouter = createBrowserRouter([
+const router = createBrowserRouter([
   {
     path: "/",
-    element: withLayout(<Home />),
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <Home />
+      </Suspense>
+    ),
   },
   {
     path: "/login",
-    element: withLayout(withLoader(Login)),
+    element: withLoader(Login),
   },
   {
     path: "/jobs/:companyId",
-    element: withLayout(<CompanyJobs />),
+    element: <CompanyJobs />,
   },
   {
     path: "/signup",
-    element: withLayout(withLoader(() => <RegisterLanding />)),
+    element: withLoader(() => <RegisterLanding />),
   },
   {
     path: "/signup/candidate",
-    element: withLayout(withLoader(CandidateSignup)),
+    element: withLoader(CandidateSignup),
   },
   {
     path: "/signup/recruiter",
-    element: withLayout(withLoader(RecruiterSignup)),
+    element: withLoader(RecruiterSignup),
   },
   {
     path: "/signup",
-    element: withLayout(withLoader(Signup)),
+    element: withLoader(Signup),
   },
   {
     path: "/jobs",
-    element: withLayout(withLoader(Jobs)),
+    element: withLoader(Jobs),
   },
   {
     path: "/contactUs",
-    element: withLayout(withLoader(() => <ContactPage />)),
+    element: withLoader(() => <ContactPage />),
   },
   {
     path: "/company",
-    element: withLayout(withLoader(() => <Company />)),
+    element: withLoader(() => <Company />),
   },
   {
     path: "/description/:id",
-    element: withLayout(withLoader(JobDescription)),
+    element: withLoader(JobDescription),
   },
   {
     path: "/browse",
-    element: withLayout(withLoader(Browse)),
+    element: withLoader(Browse),
   },
   {
     path: "/profile",
-    element: withLayout(withLoader(Profile)),
+    element: withLoader(Profile),
   },
   {
     path: "/admin/companies",
-    element: withLayout(withProtectedLoader(Companies)),
+    element: withProtectedLoader(Companies),
   },
   {
     path: "/admin/companies/create",
-    element: withLayout(withProtectedLoader(CompanyCreaate)),
+    element: withProtectedLoader(CompanyCreaate),
   },
   {
     path: "/admin/companies/:id",
-    element: withLayout(withProtectedLoader(CompanySetup)),
+    element: withProtectedLoader(CompanySetup),
   },
   {
     path: "/admin/jobs",
-    element: withLayout(withProtectedLoader(AdminJobs)),
+    element: withProtectedLoader(AdminJobs),
   },
   {
     path: "/admin/jobs/post",
-    element: withLayout(withProtectedLoader(PostJob)),
+    element: withProtectedLoader(PostJob),
   },
   {
     path: "/admin/jobs/:id/applicants",
-    element: withLayout(withProtectedLoader(Applicants)),
+    element: withProtectedLoader(Applicants),
   },
   {
     path: "/admin/candidates",
-    element: withLayout(withProtectedLoader(Candidates)),
+    element: withProtectedLoader(Candidates),
   },
   {
     path: "/admin/jobs/edit/:id",
-    element: withLayout(withProtectedLoader(EditJobForm)),
+    element: withProtectedLoader(EditJobForm),
   },
   {
     path: "/admin/dashboard",
-    element: withLayout(withProtectedLoader(() => <RecruiterDashboard />)),
+    element: withProtectedLoader(() => <RecruiterDashboard />),
   },
 ]);
 
 function App() {
-  return <RouterProvider router={appRouter} />;
+  return <RouterProvider router={router} />;
 }
 
 export default App;
